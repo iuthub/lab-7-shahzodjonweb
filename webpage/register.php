@@ -2,6 +2,26 @@
 
 include('connection.php');
 
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+ if($_POST['pwd'] == $_POST['confirm_pwd']){
+	$username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['pwd'];
+    $fullname = $_POST['fullname'];
+	$dob = date('Y-m-d H:i:s');
+
+
+ 
+	$sqlfile="INSERT INTO users (username,email,password,fullname,dob) VALUES ('$username','$email','$password','$fullname','$dob')";
+	if ($conn->query($sqlfile) === TRUE) {
+		session_start();
+      	$_SESSION["user"]=$username;
+		header("location: index.php");
+	}else{ echo "Something wrong!";}
+ }else{
+	 echo 'Passwords do not match!';
+ }
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
